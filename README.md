@@ -8,3 +8,5 @@ To start the service, run
 ```
 docker compose up
 ```
+
+The app is running at port 3000
