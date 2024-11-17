@@ -1,0 +1,40 @@
+services:
+  # Go Application Service
+  app:
+    build: .
+    container_name: books-catalogue-service
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=x71s13i8nkasdd5h
+      - DB_NAME=cataloguedb
+      - JWT_SECRET=ScalableAs123!
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=x71s13i8nkasdd5h
+      - POSTGRES_DB=cataloguedb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
